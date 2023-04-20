@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import functools
 from concurrent.futures import ThreadPoolExecutor
-from typing import AbstractSet, Collection, Literal, NoReturn, Optional, Union
-
+from typing import AbstractSet, Collection, NoReturn, Optional, Union
+# Literal
 import regex
 
 from tiktoken import _tiktoken
@@ -76,8 +76,8 @@ class Encoding:
         self,
         text: str,
         *,
-        allowed_special: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
-        disallowed_special: Union[Literal["all"], Collection[str]] = "all",
+        allowed_special, #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
+        disallowed_special, #: Union[Literal["all"], Collection[str]] = "all",
     ) -> list[int]:
         """Encodes a string into tokens.
 
@@ -113,7 +113,8 @@ class Encoding:
         if disallowed_special:
             if not isinstance(disallowed_special, frozenset):
                 disallowed_special = frozenset(disallowed_special)
-            if match := _special_token_regex(disallowed_special).search(text):
+            match = _special_token_regex(disallowed_special).search(text)
+            if match:
                 raise_disallowed_special_token(match.group())
 
         try:
@@ -147,8 +148,8 @@ class Encoding:
         text: list[str],
         *,
         num_threads: int = 8,
-        allowed_special: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
-        disallowed_special: Union[Literal["all"], Collection[str]] = "all",
+        allowed_special, #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
+        disallowed_special, #: Union[Literal["all"], Collection[str]] = "all",
     ) -> list[list[int]]:
         """Encodes a list of strings into tokens, in parallel.
 
@@ -176,8 +177,8 @@ class Encoding:
         self,
         text: str,
         *,
-        allowed_special: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
-        disallowed_special: Union[Literal["all"], Collection[str]] = "all",
+        allowed_special, #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
+        disallowed_special, #: Union[Literal["all"], Collection[str]] = "all",
     ) -> tuple[list[int], list[list[int]]]:
         """Encodes a string into stable tokens and possible completion sequences.
 
@@ -204,7 +205,8 @@ class Encoding:
         if disallowed_special:
             if not isinstance(disallowed_special, frozenset):
                 disallowed_special = frozenset(disallowed_special)
-            if match := _special_token_regex(disallowed_special).search(text):
+            match = _special_token_regex(disallowed_special).search(text)
+            if match:
                 raise_disallowed_special_token(match.group())
 
         return self._core_bpe.encode_with_unstable(text, allowed_special)
