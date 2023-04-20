@@ -76,8 +76,8 @@ class Encoding:
         self,
         text: str,
         *,
-        allowed_special, #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
-        disallowed_special, #: Union[Literal["all"], Collection[str]] = "all",
+        allowed_special=set(), #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
+        disallowed_special=set(), #: Union[Literal["all"], Collection[str]] = "all",
     ) -> list[int]:
         """Encodes a string into tokens.
 
@@ -148,8 +148,8 @@ class Encoding:
         text: list[str],
         *,
         num_threads: int = 8,
-        allowed_special, #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
-        disallowed_special, #: Union[Literal["all"], Collection[str]] = "all",
+        allowed_special=set(), #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
+        disallowed_special=set(), #: Union[Literal["all"], Collection[str]] = "all",
     ) -> list[list[int]]:
         """Encodes a list of strings into tokens, in parallel.
 
@@ -177,8 +177,8 @@ class Encoding:
         self,
         text: str,
         *,
-        allowed_special, #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
-        disallowed_special, #: Union[Literal["all"], Collection[str]] = "all",
+        allowed_special=set(), #: Union[Literal["all"], AbstractSet[str]] = set(),  # noqa: B006
+        disallowed_special=set(), #: Union[Literal["all"], Collection[str]] = "all",
     ) -> tuple[list[int], list[list[int]]]:
         """Encodes a string into stable tokens and possible completion sequences.
 
@@ -290,7 +290,7 @@ class Encoding:
     def eot_token(self) -> int:
         return self._special_tokens["<|endoftext|>"]
 
-    @functools.cached_property
+    #@functools.cached_property
     def special_tokens_set(self) -> set[str]:
         return set(self._special_tokens.keys())
 
